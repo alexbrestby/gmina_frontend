@@ -1,11 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import classes from './header.module.css';
 
 const Header: React.FC = () => {
   return (
     <header className={classes.header}>
-      <h1>My Archive Site</h1>
+      <Link to='/'>
+        <div className={classes.logo}>
+          <img src="./logo.png" alt="logo" />
+          <h1>InFamily</h1>
+        </div>
+      </Link>
       <Navigation />
     </header>
   );
