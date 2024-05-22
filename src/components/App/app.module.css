@@ -6,5 +6,10 @@
   max-width: 1200px;
   align-items: center;
   flex-direction: column;
-  background-color: gray;
+}
+
+.main {
+  width: 100%;
+  height: calc(100vh - 120px);
+  display: flex;
 }
