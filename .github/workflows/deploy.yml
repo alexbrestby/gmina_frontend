@@ -1,0 +1,41 @@
+name: Deploy to Virtual Hosting
+
+on:
+  push:
+    branches:
+      - develop  # Запускать workflow при пуше в ветку develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'  # Укажите версию Node.js, если нужно
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm run build  # Команда сборки проекта
+
+    - name: List build directory
+      run: ls -la ./dist  # Проверить существование директории сборки
+
+    - name: Deploy via SFTP
+      env:
+        FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      run: |
+        sudo apt-get install -y lftp
+        lftp -c "
+          set sftp:auto-confirm yes;
+          set ftp:ssl-allow no;
+          open -u $FTP_USERNAME,$FTP_PASSWORD sftp://$FTP_SERVER;
+          mirror -R ./dist /var/www/alex.brest.by/data/www/leoniuk.org"
