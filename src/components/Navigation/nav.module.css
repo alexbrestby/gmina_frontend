@@ -1,6 +1,7 @@
 .nav {
   display: flex;
   list-style-type: none;
+  font-size: 1.35rem;
 }
 
 .nav li {
