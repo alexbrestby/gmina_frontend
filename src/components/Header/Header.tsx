@@ -3,7 +3,14 @@ import { Link } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import classes from './header.module.css';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  isLoggedIn: boolean;
+  username: string;
+  handleLogin: () => void;
+  handleLogout: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ isLoggedIn, username, handleLogin, handleLogout }) => {
   return (
     <header className={classes.header}>
       <Link to='/'>
@@ -12,7 +19,7 @@ const Header: React.FC = () => {
           <h1>InFamily</h1>
         </div>
       </Link>
-      <Navigation />
+      <Navigation isLoggedIn={isLoggedIn} username={username} handleLogin={handleLogin} handleLogout={handleLogout} />
     </header>
   );
 };
