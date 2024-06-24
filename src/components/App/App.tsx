@@ -1,50 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import classes from './app.module.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { login, logout } from '../../services/authService';
-import { getAccessToken, getUserName } from '../../utils/storage';
+import AuthModal from '../AuthModalWindow/AuthModalWindow';
+import useAuth from '../../hooks/useAuth';
 
 const App: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUserName] = useState('');
+  const { isLoggedIn, username, handleLogin, handleRegister, handleLogout } = useAuth();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  useEffect(() => {
-    const token = getAccessToken();
-    const user = getUserName();
-    if (token) {
-      setIsLoggedIn(true);
-    }
-    if (user) {
-      setUserName(user);
-    }
-  }, []);
-
-  const handleLogin = async () => {
-    const success = await login('alex.brest.by@gmail.com', '123456');
-    if (success) {
-      setIsLoggedIn(true);
-    }
+  const openModal = () => {
+    setModalIsOpen(true);
   };
 
-  const handleLogout = async () => {
-    const success = await logout();
-    if (success) {
-      setIsLoggedIn(false);
-    }
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   return (
     <div className={classes.wrapper}>
-      <Header isLoggedIn={isLoggedIn} username={username} handleLogin={handleLogin} handleLogout={handleLogout} />
+      <Header isLoggedIn={isLoggedIn} username={username} handleLogin={openModal} handleLogout={handleLogout} />
       <main className={classes.main}>
         <Outlet />
       </main>
       <Footer />
+      <AuthModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        onLogin={handleLogin}
+        onRegister={handleRegister}
+      />
     </div>
   );
 };
 
 export default App;
-

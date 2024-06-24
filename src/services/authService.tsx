@@ -14,8 +14,8 @@ export const login = async (email: string, password: string) => {
     localStorage.setItem('username', data.username);
     return true;
   } else {
-    alert('Login failed');
-    return false;
+const errorData = await response.json();
+      throw new Error(errorData.message || 'Login failed')
   }
 };
 
