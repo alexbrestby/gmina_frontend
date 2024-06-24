@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { login, logout } from '../services/authService';
+import { login, register, logout } from '../services/authService';
 import { getAccessToken, getUserName } from '../utils/storage';
 
 const useAuth = () => {
@@ -26,8 +26,10 @@ const useAuth = () => {
   };
 
   const handleRegister = async (email: string, password: string, username: string) => {
-    console.log({ email, password, username });
-    handleLogin(email, password);
+    const sucess = await register(email, password, username);
+    if (sucess) {
+      console.log({ email, password, username });
+    }
   };
 
   const handleLogout = async () => {

@@ -14,10 +14,30 @@ export const login = async (email: string, password: string) => {
     localStorage.setItem('username', data.username);
     return true;
   } else {
-const errorData = await response.json();
-      throw new Error(errorData.message || 'Login failed')
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Login failed')
   }
 };
+
+export const register = async (email: string, password: string, username: string) => {
+  const response = await fetch('http://localhost:5000/user/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password, username }),
+    credentials: 'include',
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data);
+    return true;
+  } else {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Registration faild');
+  }
+}
 
 export const logout = async () => {
   const response = await fetch('http://localhost:5000/user/logout', {

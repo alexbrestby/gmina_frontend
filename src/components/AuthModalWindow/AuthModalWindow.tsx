@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import LoginForm from '../LoginForm/LoginForm';
 import RegisterForm from '../RegisterForm/RegisterForm';
+import classes from './authmodalwindow.module.css';
 
 Modal.setAppElement('#root');
 
@@ -24,15 +25,15 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onRequestClose, onLogin, 
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Auth Form"
-    >
+      className={classes.modal}>
       {isLoginForm ? (
         <LoginForm onClose={onRequestClose} onLogin={onLogin} />
       ) : (
         <RegisterForm onClose={onRequestClose} onRegister={onRegister} />
       )}
-      <button onClick={toggleForm}>
-        {isLoginForm ? 'Switch to Register' : 'Switch to Login'}
-      </button>
+      <div className={classes.switchButton} onClick={toggleForm}>
+        {isLoginForm ? 'регистрация' : 'войти'}
+      </div>
     </Modal>
   );
 };

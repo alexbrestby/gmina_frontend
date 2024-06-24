@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import classes from './registerfrom.module.css';
 
 interface RegisterFormProps {
   onClose: () => void;
@@ -13,7 +14,7 @@ interface IFormInput {
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onClose, onRegister }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = data => {
     onRegister(data.email, data.password, data.username);
@@ -21,32 +22,37 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose, onRegister }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Email</label>
-        <input
+    <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+      <div className={classes.inputWrapper}>
+        <label>адрес электронной почты</label>
+        <input className={classes.input}
           type="email"
-          {...register('email', { required: 'Email is required', pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: 'Email is not valid' } })}
+          {...register('email', { required: 'введите адрес электронной почты', pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: 'проверьте адрес электронной почты' } })}
         />
         {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
       </div>
-      <div>
-        <label>Username</label>
-        <input
+      <div className={classes.inputWrapper}>
+        <label>имя или псевдоним</label>
+        <input className={classes.input}
           type="text"
-          {...register('username', { required: 'Username is required' })}
+          {...register('username', { required: 'введите Ваше имя' })}
         />
         {errors.username && <p style={{ color: 'red' }}>{errors.username.message}</p>}
       </div>
-      <div>
-        <label>Password</label>
-        <input
+      <div className={classes.inputWrapper}>
+        <label>пароль</label>
+        <input className={classes.input}
           type="password"
-          {...register('password', { required: 'Password is required' })}
+          {...register('password', { required: 'введите пароль' })}
         />
         {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
       </div>
-      <button type="submit">Register</button>
+      <input
+        type="submit"
+        value="зарегистрироваться"
+        className={classes.submit}
+        disabled={!isValid}
+      />
     </form>
   );
 };
