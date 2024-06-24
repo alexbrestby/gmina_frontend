@@ -17,7 +17,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onRequestClose, onLogin, 
   const [isLoginForm, setIsLoginForm] = useState(true);
 
   const toggleForm = () => {
-    setIsLoginForm(!isLoginForm);
+    setIsLoginForm((prevIsLoginForm) => !prevIsLoginForm);
   };
 
   return (
@@ -25,14 +25,15 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onRequestClose, onLogin, 
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Auth Form"
-      className={classes.modal}>
+      className={classes.modal}
+    >
       {isLoginForm ? (
-        <LoginForm onClose={onRequestClose} onLogin={onLogin} />
+        <LoginForm key="loginForm" onClose={onRequestClose} onLogin={onLogin} />
       ) : (
-        <RegisterForm onClose={onRequestClose} onRegister={onRegister} />
+        <RegisterForm key="registerForm" onClose={onRequestClose} onRegister={onRegister} />
       )}
       <div className={classes.switchButton} onClick={toggleForm}>
-        {isLoginForm ? 'регистрация' : 'войти'}
+        {isLoginForm ? 'Регистрация' : 'Войти'}
       </div>
     </Modal>
   );

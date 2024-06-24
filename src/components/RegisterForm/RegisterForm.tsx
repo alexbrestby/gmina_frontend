@@ -14,7 +14,7 @@ interface IFormInput {
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onClose, onRegister }) => {
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm<IFormInput>();
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm<IFormInput>({ mode: "onBlur" });
 
   const onSubmit: SubmitHandler<IFormInput> = data => {
     onRegister(data.email, data.password, data.username);
