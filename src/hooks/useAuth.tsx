@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { login, register, logout } from '../services/authService';
+import authService from '../services/authService';
 import { getAccessToken, getUserName } from '../utils/storage';
 
 const useAuth = () => {
@@ -18,23 +18,25 @@ const useAuth = () => {
   }, []);
 
   const handleLogin = async (email: string, password: string) => {
-    const success = await login(email, password);
-    if (success) {
+    const response = await authService.login(email, password);
+    if (response) {
+      console.log(response);
       setIsLoggedIn(true);
       setUserName(getUserName() || '');
     }
   };
 
   const handleRegister = async (email: string, password: string, username: string) => {
-    const sucess = await register(email, password, username);
-    if (sucess) {
-      console.log({ email, password, username });
+    const response = await authService.register(email, password, username);
+    if (response) {
+      console.log(response);
     }
   };
 
   const handleLogout = async () => {
-    const success = await logout();
-    if (success) {
+    const response = await authService.logout();
+    if (response) {
+      console.log(response);
       setIsLoggedIn(false);
       setUserName('');
     }
