@@ -23,17 +23,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onLogin }) => {
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={classes.inputWrapper}>
-        <label>адрес электронной почты</label>
         <input className={classes.input}
           type="email"
+          placeholder="адрес электронной почты"
           {...register('email', { required: 'адрес электронной почты обязателен', pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: 'проверьте адрес электронной почты' } })}
         />
         {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
       </div>
       <div className={classes.inputWrapper}>
-        <label>пароль</label>
         <input className={classes.input}
           type="password"
+          placeholder="пароль"
           {...register('password', { required: 'пароль обязателен' })}
         />
         {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}

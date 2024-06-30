@@ -24,25 +24,25 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onClose, onRegister }) => {
   return (
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={classes.inputWrapper}>
-        <label>адрес электронной почты</label>
         <input className={classes.input}
           type="email"
+          placeholder="адрес электронной почты"
           {...register('email', { required: 'введите адрес электронной почты', pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: 'проверьте адрес электронной почты' } })}
         />
         {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
       </div>
       <div className={classes.inputWrapper}>
-        <label>имя или псевдоним</label>
         <input className={classes.input}
           type="text"
+          placeholder="имя или псевдоним"
           {...register('username', { required: 'введите Ваше имя' })}
         />
         {errors.username && <p style={{ color: 'red' }}>{errors.username.message}</p>}
       </div>
       <div className={classes.inputWrapper}>
-        <label>пароль</label>
         <input className={classes.input}
           type="password"
+          placeholder="пароль"
           {...register('password', { required: 'введите пароль' })}
         />
         {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
